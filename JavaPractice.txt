@@ -1,0 +1,332 @@
+Name: Nupur Trivedi
+Registration Number: 22BCE10096
+Email: nupurtrivedi2022@vitbhopal.ac.in
+
+12/2025
+
+// Software installation and task submission
+
+
+package practice1;
+
+public class Testing1{
+  public static void main(String[] args){
+    System.out.println("Radhe Radhe");
+  }
+}
+
+
+14/2025
+
+import java.sql.*;
+
+public class JDBC{
+  public static void main(String[] args){
+    try{
+      Class.forName("com.mysql.cj.jdbc.Driver");  // Register    // 1
+      System.out.println("11111)
+      Connection con = DriverManager.getConnection(
+        "jdbc:mysql: // localhost:3306 /friday" , "root","root");
+      //here sonoo is database name, root is username and password     // 2
+      System.out.println("22222");
+      Statement stmt = con.createStatement();   // 3
+      System.out.println("33333");  
+      ResultSet rs = stmt.executeQuery("select * from student");  // 4
+  
+      while(rs.next())
+      System.out.println(rs.getInt(1)+ " " + rs.getString + " " + rs.getString(3);
+      }
+      con.close();   //5
+  
+      }
+    catch(Exception e){
+      System.out.println("Shubham check your program, there is a small error");
+    }
+  }
+}
+
+
+15/2025
+import java.sql.*;
+
+public class JDBC{
+  public static void main(String[] args){
+    try{
+      Class.forName("com.mysql.cj.jdbc.Driver");  // Register    // 1
+      System.out.println("11111)
+      Connection con = DriverManager.getConnection(
+        "jdbc:mysql: // localhost:3306 /friday" , "root","root");
+      //here sonoo is database name, root is username and password     // 2
+      System.out.println("22222");
+      Statement stmt = con.createStatement();   // 3
+      System.out.println("33333");  
+      ResultSet rs = stmt.executeQuery("select * from student");  // 4
+  
+      while(rs.next())
+      System.out.println(rs.getInt(1)+ " " + rs.getString + " " + rs.getString(3);
+      }
+      con.close();   //5
+  
+      }
+    catch(Exception e){
+      System.out.println("Shubham check your program, there is a small error");
+    }
+  }
+}
+
+
+CRUD_TEST
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class CRUD_Test {
+  public static void main(String[] args){
+    CRUD_Test objTest = new CRUD_Test();
+
+    objTest.create_data("1","Shubham","shubham@gmail.com");
+    objTest.create_data("2","Shubham","shubhamraj@gmail.com");
+
+  }
+
+  public void create_data(String sl_no, String name, String email){
+    DB_Connection obj_DB_Connection = new DB_Connection();
+    Connection connection = obj_DB_Connection.connection();
+    PreparedStatement ps = null;
+    try{
+      
+      ps = connection.prepareStatement( "insert into user(sl_no, name, email) values (?,?,?)");
+      ps.setString(1,sl_no);
+      ps.setString(2,name);
+      ps.setString(3,email);
+      System.out.println(ps);
+      ps.executeUpdate();
+    } catch (Exception e){
+      System.out.println(e);
+    }
+  }
+}
+
+
+17/2025
+package CRUD;
+import java.sql.Connection;
+import java.sql.DriverManager;
+public class DB_Connection {
+public static void main(String[] args) {
+  DB_Connection obj_DB_Connection=new DB_Connection();
+  System.out.println(obj_DB_Connection.get_connection());
+}
+public Connection get_connection(){
+ Connection connection=null;
+try {
+  Class.forName("com.mysql.jdbc.Driver");              
+  connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/crud","root", "root");
+} catch (Exception e) {
+  System.out.println(e);
+}
+  return connection;
+}
+}
+
+
+
+
+CRUD_Test.java
+package CRUD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class CRUD_Test {
+
+public static void main(String[] args) {
+	CRUD_Test objTest=new CRUD_Test();
+        //insert data
+	objTest.create_data("1", "jinu", "jinu@gmail.com");
+	objTest.create_data("2", "jawad", "jawad@gmail.com");
+        //read data
+	objTest.read_data("2");
+        //update data
+	objTest.update_data("2", "22", "jawad2", "jawad2@gmail");
+        //delete data
+	objTest.delete_data("1");
+}
+
+public void create_data(String sl_no,String name,String email){
+	DB_Connection obj_DB_Connection=new DB_Connection();
+	Connection connection=obj_DB_Connection.get_connection();
+	PreparedStatement ps=null;
+	try {
+		String query="insert into user(sl_no,name,email) values (?,?,?)";
+		ps=connection.prepareStatement(query);
+		ps.setString(1, sl_no);
+		ps.setString(2, name);
+		ps.setString(3, email);
+		System.out.println(ps);
+		ps.executeUpdate();
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+
+public void read_data(String sl_no){
+	DB_Connection obj_DB_Connection=new DB_Connection();
+	Connection connection=obj_DB_Connection.get_connection();
+	PreparedStatement ps=null;
+	ResultSet rs=null;
+	try {
+		String query="select * from user";
+		ps=connection.prepareStatement(query);
+		//ps.setString(1, sl_no);
+		System.out.println(ps);
+		rs=ps.executeQuery();
+		while(rs.next()){
+		System.out.println("Sl no -"+rs.getString("sl_no"));
+		System.out.println("name -"+rs.getString("name"));
+		System.out.println("email -"+rs.getString("email"));
+		System.out.println("---------------");
+		}
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+
+public void update_data(String sl_no,String new_sl_no,String name,String email){
+	DB_Connection obj_DB_Connection=new DB_Connection();
+	Connection connection=obj_DB_Connection.get_connection();
+	PreparedStatement ps=null;
+	try {
+		String query="update user set sl_no=?,name=?,email=? where sl_no=?";
+		ps=connection.prepareStatement(query);
+		ps.setString(1, new_sl_no);
+		ps.setString(2, name);
+		ps.setString(3, email);
+		ps.setString(4, sl_no);
+		System.out.println(ps);
+		ps.executeUpdate();
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+
+public void delete_data(String sl_no){
+	DB_Connection obj_DB_Connection=new DB_Connection();
+	Connection connection=obj_DB_Connection.get_connection();
+	PreparedStatement ps=null;
+	try {
+		String query="delete from user where sl_no=?";
+		ps=connection.prepareStatement(query);
+		ps.setString(1, sl_no);
+		System.out.println(ps);
+		ps.executeUpdate();
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+}
+
+
+
+Other practice files of java:-
+
+
+import com.mongodb.client.MongoCollection; 
+import com.mongodb.client.MongoDatabase;  
+import org.bson.Document;  
+import com.mongodb.MongoClient; 
+import com.mongodb.MongoCredential;  
+public class DropingCollection { 
+   
+   public static void main( String args[] ) {  
+      // Creating a Mongo client 
+      MongoClient mongo = new MongoClient( "localhost" , 27017 ); 
+      // Creating Credentials 
+      MongoCredential credential; 
+      credential = MongoCredential.createCredential("sampleUser", "myDb", 
+         "password".toCharArray()); 
+      System.out.println("Connected to the database successfully");  
+      
+      // Accessing the database 
+      MongoDatabase database = mongo.getDatabase("myDb");  
+      
+      // Creating a collection 
+      System.out.println("Collections created successfully"); 
+      // Retrieving a collection
+      MongoCollection<Document> collection = database.getCollection("sampleCollection");
+      // Dropping a Collection 
+      collection.drop(); 
+      System.out.println("Collection dropped successfully");
+   } 
+}
+
+-----------------------------------------------------------------------------------
+
+import com.mongodb.client.MongoDatabase; 
+import com.mongodb.MongoClient; 
+import com.mongodb.MongoCredential;  
+public class ListOfCollection { 
+   
+   public static void main( String args[] ) {  
+      
+      // Creating a Mongo client 
+      MongoClient mongo = new MongoClient( "localhost" , 27017 ); 
+      // Creating Credentials 
+      MongoCredential credential; 
+      credential = MongoCredential.createCredential("sampleUser", "myDb", 
+         "password".toCharArray()); 
+      System.out.println("Connected to the database successfully");  
+      
+      // Accessing the database 
+      MongoDatabase database = mongo.getDatabase("myDb"); 
+      System.out.println("Collection created successfully"); 
+      for (String name : database.listCollectionNames()) { 
+         System.out.println(name); 
+      } 
+   }
+}
+
+---------------------------------------------------------------------------------
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class AuthSystem {
+    // Simulated database of users (username -> password)
+    private static Map<String, String> userDB = new HashMap<>();
+
+    static {
+        // Adding some test users
+        userDB.put("admin", "admin123");
+        userDB.put("user1", "password1");
+        userDB.put("user2", "password2");
+    }
+
+    public static boolean authenticateUser(String username, String password) {
+        return userDB.containsKey(username) && userDB.get(username).equals(password);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        if (authenticateUser(username, password)) {
+            System.out.println("Authentication successful! You can now perform your tasks.");
+            performUserTasks();
+        } else {
+            System.out.println("Invalid username or password. Access denied.");
+        }
+
+        scanner.close();
+    }
+
+    public static void performUserTasks() {
+        System.out.println("Performing user tasks...");
+        // Add logic for user-specific operations here
+    }
+}
